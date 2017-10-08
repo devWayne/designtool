@@ -1,0 +1,183 @@
+html body .dstl-wrapper {
+  position: relative;
+}
+
+/* 控制面板部分 */
+html body .dstl-panel {
+  box-sizing: border-box;
+  position: fixed;
+  z-index: 1000;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 1);
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+html body .dstl-panel-area-ul,
+html body .dstl-panel-area-li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+html body .dstl-panel-area {
+  padding-right: 10px;
+  padding-bottom: 10px;
+}
+
+html body .dstl-panel-area-ul {
+  padding-top: 10px;
+}
+
+html body .dstl-panel-area-li {
+  line-height: 26px;
+  height: 26px;
+  font-size: 12px;
+}
+
+html body .dstl-panel-area-li:after {
+  display: block;
+  content: " ";
+  clear: both;
+}
+
+html body .dstl-panel-area-label {
+  padding: 0;
+  margin: 0;
+  background: #fff;
+  line-height: 26px;
+  text-transform: none;
+
+  float: left;
+  width: 80px;
+  height: 26px;
+  vertical-align: middle;
+  padding-right: 10px;
+  text-align: right;
+  color: #000;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+html body .dstl-panel-area-input {
+  box-sizing: border-box;
+  height: 26px;
+  border-radius: 0;
+  box-shadow: none;
+  margin: 0;
+
+  width: 140px;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 1px solid black;
+  vertical-align: middle;
+  outline: none;
+  font-size: 12px;
+}
+
+html body .dstl-panel-area-input-file {
+  box-sizing: border-box;
+  border-radius: 0;
+  box-shadow: none;
+  margin: 0;
+
+  width: 140px;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  vertical-align: middle;
+  outline: none;
+  font-size: 12px;
+}
+
+
+html body .dstl-panel-area-checkbox {
+  float: left;
+  margin-top: 7px;
+  width: 12px;
+  height: 12px;
+  border: 1px solid #000;
+}
+
+html body .dstl-panel-area-checkbox.dstl-panel-area-checked {
+  background: rgba(127, 220, 127, 0.79);
+}
+
+html body .dstl-btn-area {
+  position: relative;
+  text-align: right;
+}
+
+html body .dstl-btn-upload-wrap {
+  margin-bottom: 10px;
+}
+
+html body .dstl-btn-img-upload {
+  border: 1px solid black;
+}
+
+html body .dstl-btn {
+  display: inline-block;
+  padding: 5px;
+  text-align: center;
+  margin: 0 5px;
+  color: #000;
+  font-size: 12px;
+  text-decoration: none;
+  -webkit-transition: all .5s;
+  -moz-transition: all .5s;
+  -ms-transition: all .5s;
+  -o-transition: all .5s;
+  transition: all .5s;
+  cursor: pointer;
+}
+
+html body .dstl-btn:hover {
+  color: #ff4400;
+}
+
+/*图片部分*/
+html body .dstl-img {
+  // display: none;
+  box-sizing: border-box;
+  position: fixed;
+  width: 100%;
+  opacity: .5;
+  cursor: move;
+  // border: 1px solid black;
+}
+
+html body .dstl-img.dstl-show {
+  display: inline;
+}
+
+/*交叉线部分*/
+html body .dstl-row-line,
+html body .dstl-vertical-line {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  background: red;
+}
+
+html body .dstl-row-line.dstl-show,
+html body .dstl-vertical-line.dstl-show {
+  display: block;
+}
+
+html body .dstl-row-line {
+  left: 0;
+  right: 0;
+  height: 1px;
+}
+
+html body .dstl-vertical-line {
+  width: 1px;
+  top: 0;
+  bottom: 0;
+}
+
