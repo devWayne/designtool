@@ -62,11 +62,6 @@ class Img {
         this.dragInstance.init(this.$img).onMove(this.dragHandler);
     }
 
-    removeEvent() {
-
-    }
-
-
 }
 
 export {

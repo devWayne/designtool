@@ -1,3 +1,5 @@
+import {tpl} from './tpl'
+
 /*
  * 控制面板部分
  */
@@ -43,56 +45,8 @@ class Panel {
     appendDom() {
 
         // 插入 DOM 的时候就根据配置信息初始化面板样式
-        var panelZIndex = parseInt(this.config.zIndex) ? (parseInt(this.config.zIndex) + 1000) : 1000;
-        var domString = '' +
-            '<div class="dstl-panel dstlPanel" style="z-index: ' + panelZIndex + ';">' +
-
-            '<div class="dstl-panel-area dstl_PanelArea"' + (!this.config.showPanel ? ' style="display: none;"' : '') + '>' +
-            '<ul class="dstl-panel-area-ul">' +
-            '<li class="dstl-panel-area-li">' +
-            '<span class="dstl-panel-area-label">opacity: </span><input type="text" value="' + this.config.opacity + '" class="dstl_InputText dstl_ValOpacity dstl-panel-area-input">' +
-            '</li>' +
-            '<li class="dstl-panel-area-li">' +
-            '<span class="dstl-panel-area-label">z-index: </span><input type="text" value="' + this.config.zIndex + '" class="dstl_InputText dstl_ValZIndex dstl-panel-area-input">' +
-            '</li>' +
-            '<li class="dstl-panel-area-li">' +
-            '<span class="dstl-panel-area-label">width: </span><input type="text" value="' + this.config.width + '" class="dstl_InputText dstl_ValWidth dstl-panel-area-input">' +
-            '</li>' +
-            '<li class="dstl-panel-area-li">' +
-            '<span class="dstl-panel-area-label">height: </span><input type="text" value="' + this.config.height + '" class="dstl_InputText dstl_ValHeight dstl-panel-area-input">' +
-            '</li>' +
-            '<li class="dstl-panel-area-li">' +
-            '<span class="dstl-panel-area-label">left: </span><input type="text" value="' + this.config.left + '" class="dstl_InputText dstl_ValLeft dstl-panel-area-input">' +
-            '</li>' +
-            '<li class="dstl-panel-area-li">' +
-            '<span class="dstl-panel-area-label">top: </span><input type="text" value="' + this.config.top + '" class="dstl_InputText dstl_ValTop dstl-panel-area-input">' +
-            '</li>' +
-            '<li class="dstl-panel-area-li">' +
-            '<span class="dstl-panel-area-label">online img: </span><input type="text"' + (this.config.src ? 'value=' + this.config.src : '') + ' class="dstl_InputText dstl_ValPic dstl-panel-area-input">' +
-            '</li>' +
-            '<li class="dstl-panel-area-li">' +
-            '<span class="dstl-panel-area-label">local img: </span><input type="file" class="dstl_ValFile dstl-panel-area-input-file">' +
-            '</li>' +
-            '<li class="dstl-panel-area-li">' +
-            '<span class="dstl-panel-area-label">img border: </span><span class="dstl-panel-area-checkbox dstl_InputCheckbox dstl_ValBorder' + (this.config.showBorder ? ' dstl-panel-area-checked' : '') + '"></span>' +
-            '</li>' +
-            '<li class="dstl-panel-area-li">' +
-            '<span class="dstl-panel-area-label">cross line: </span><span class="dstl-panel-area-checkbox dstl_InputCheckbox dstl_ValCrossLine' + (this.config.showCrossLine ? ' dstl-panel-area-checked' : '') + '"></span>' +
-            '</li>' +
-            '</ul>' +
-            '</div>' +
-
-            '<div class="dstl-btn-area">' +
-
-            '<a href="javascript:;"' + (!this.config.showPanel ? ' style="display: none;"' : '') + ' class="dstl-btn btn-reset dstl_Reset">Reset</a>' +
-
-            (this.config.showImg && this.config.src ? '<a href="javascript:;"' + (!this.config.showPanel ? ' style="display: none;"' : '') + ' class="dstl-btn btn-img-switcher dstl_ImgSwither">Hide image</a>' : '<a href="javascript:;"' + (!this.config.showPanel ? ' style="display: none;"' : '') + ' class="dstl-btn btn-img-switcher dstl-is-closed dstl_ImgSwither">Show image</a>') +
-
-            (this.config.showPanel ? '<a href="javascript:;" class="dstl-btn dstl_PanelSwitcher">Hide panel<a>' : '<a href="javascript:;" class="dstl-btn dstl_PanelSwitcher dstl-is-closed' + '">Visual Compare</a>') +
-
-            '</div>' +
-
-            '</div>';
+        this.config.panelZIndex = parseInt(this.config.zIndex) ? (parseInt(this.config.zIndex) + 1000) : 1000;
+        var domString = tpl(this.config);
 
 
         this.$insert.append(domString);

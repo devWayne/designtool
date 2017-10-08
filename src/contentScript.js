@@ -10,7 +10,7 @@ import {Img} from './img'
     chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
 
-        if (request.action === 'set-dstl-state') {
+        if (request.action === 'setState') {
 
             sendResponse({
                 msg: 'success'
