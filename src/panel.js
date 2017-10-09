@@ -1,8 +1,5 @@
 import {tpl} from './tpl'
 
-/*
- * 控制面板部分
- */
 class Panel {
 
     constructor(config, imgInstance) {
@@ -45,14 +42,8 @@ class Panel {
     appendDom() {
 
         // 插入 DOM 的时候就根据配置信息初始化面板样式
-        this.config.panelZIndex = parseInt(this.config.zIndex) ? (parseInt(this.config.zIndex) + 1000) : 1000;
-        var domString = tpl(this.config);
-
-
-        this.$insert.append(domString);
-
+        this.$insert.append(tpl(this.config));
         this.$container = this.$insert.find('.dstlPanel');
-
         this.$panelArea = this.$insert.find('.dstl_PanelArea');
 
     }
@@ -217,7 +208,7 @@ class Panel {
                 self.$panelArea.hide();
                 self.$container.find('.dstl_ImgSwither').hide();
                 self.$container.find('.dstl_Reset').hide();
-                $target.addClass('dstl-is-closed').text('Visual Compare');
+                $target.addClass('dstl-is-closed').text('DSTL');
             }
 
         });

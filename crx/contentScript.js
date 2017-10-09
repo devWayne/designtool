@@ -135,9 +135,6 @@ var Img = function () {
             this.dragInstance = new _drag.Drag();
             this.dragInstance.init(this.$img).onMove(this.dragHandler);
         }
-    }, {
-        key: 'removeEvent',
-        value: function removeEvent() {}
     }]);
 
     return Img;
@@ -164,7 +161,7 @@ var _img = __webpack_require__(0);
     // 监听插件页面发来的消息
     chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
-        if (request.action === 'set-dstl-state') {
+        if (request.action === 'setState') {
 
             sendResponse({
                 msg: 'success'
@@ -201,7 +198,7 @@ var _crossline = __webpack_require__(4);
 
 var _panel = __webpack_require__(5);
 
-__webpack_require__(6);
+__webpack_require__(7);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -542,8 +539,11 @@ exports.CrossLine = CrossLine;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.Panel = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _tpl = __webpack_require__(6);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -596,13 +596,8 @@ var Panel = function () {
         value: function appendDom() {
 
             // 插入 DOM 的时候就根据配置信息初始化面板样式
-            var panelZIndex = parseInt(this.config.zIndex) ? parseInt(this.config.zIndex) + 1000 : 1000;
-            var domString = '' + '<div class="dstl-panel dstlPanel" style="z-index: ' + panelZIndex + ';">' + '<div class="dstl-panel-area dstl_PanelArea"' + (!this.config.showPanel ? ' style="display: none;"' : '') + '>' + '<ul class="dstl-panel-area-ul">' + '<li class="dstl-panel-area-li">' + '<span class="dstl-panel-area-label">opacity: </span><input type="text" value="' + this.config.opacity + '" class="dstl_InputText dstl_ValOpacity dstl-panel-area-input">' + '</li>' + '<li class="dstl-panel-area-li">' + '<span class="dstl-panel-area-label">z-index: </span><input type="text" value="' + this.config.zIndex + '" class="dstl_InputText dstl_ValZIndex dstl-panel-area-input">' + '</li>' + '<li class="dstl-panel-area-li">' + '<span class="dstl-panel-area-label">width: </span><input type="text" value="' + this.config.width + '" class="dstl_InputText dstl_ValWidth dstl-panel-area-input">' + '</li>' + '<li class="dstl-panel-area-li">' + '<span class="dstl-panel-area-label">height: </span><input type="text" value="' + this.config.height + '" class="dstl_InputText dstl_ValHeight dstl-panel-area-input">' + '</li>' + '<li class="dstl-panel-area-li">' + '<span class="dstl-panel-area-label">left: </span><input type="text" value="' + this.config.left + '" class="dstl_InputText dstl_ValLeft dstl-panel-area-input">' + '</li>' + '<li class="dstl-panel-area-li">' + '<span class="dstl-panel-area-label">top: </span><input type="text" value="' + this.config.top + '" class="dstl_InputText dstl_ValTop dstl-panel-area-input">' + '</li>' + '<li class="dstl-panel-area-li">' + '<span class="dstl-panel-area-label">online img: </span><input type="text"' + (this.config.src ? 'value=' + this.config.src : '') + ' class="dstl_InputText dstl_ValPic dstl-panel-area-input">' + '</li>' + '<li class="dstl-panel-area-li">' + '<span class="dstl-panel-area-label">local img: </span><input type="file" class="dstl_ValFile dstl-panel-area-input-file">' + '</li>' + '<li class="dstl-panel-area-li">' + '<span class="dstl-panel-area-label">img border: </span><span class="dstl-panel-area-checkbox dstl_InputCheckbox dstl_ValBorder' + (this.config.showBorder ? ' dstl-panel-area-checked' : '') + '"></span>' + '</li>' + '<li class="dstl-panel-area-li">' + '<span class="dstl-panel-area-label">cross line: </span><span class="dstl-panel-area-checkbox dstl_InputCheckbox dstl_ValCrossLine' + (this.config.showCrossLine ? ' dstl-panel-area-checked' : '') + '"></span>' + '</li>' + '</ul>' + '</div>' + '<div class="dstl-btn-area">' + '<a href="javascript:;"' + (!this.config.showPanel ? ' style="display: none;"' : '') + ' class="dstl-btn btn-reset dstl_Reset">Reset</a>' + (this.config.showImg && this.config.src ? '<a href="javascript:;"' + (!this.config.showPanel ? ' style="display: none;"' : '') + ' class="dstl-btn btn-img-switcher dstl_ImgSwither">Hide image</a>' : '<a href="javascript:;"' + (!this.config.showPanel ? ' style="display: none;"' : '') + ' class="dstl-btn btn-img-switcher dstl-is-closed dstl_ImgSwither">Show image</a>') + (this.config.showPanel ? '<a href="javascript:;" class="dstl-btn dstl_PanelSwitcher">Hide panel<a>' : '<a href="javascript:;" class="dstl-btn dstl_PanelSwitcher dstl-is-closed' + '">Visual Compare</a>') + '</div>' + '</div>';
-
-            this.$insert.append(domString);
-
+            this.$insert.append((0, _tpl.tpl)(this.config));
             this.$container = this.$insert.find('.dstlPanel');
-
             this.$panelArea = this.$insert.find('.dstl_PanelArea');
         }
     }, {
@@ -766,7 +761,7 @@ var Panel = function () {
                     self.$panelArea.hide();
                     self.$container.find('.dstl_ImgSwither').hide();
                     self.$container.find('.dstl_Reset').hide();
-                    $target.addClass('dstl-is-closed').text('Visual Compare');
+                    $target.addClass('dstl-is-closed').text('DSTL');
                 }
             });
 
@@ -907,10 +902,25 @@ exports.Panel = Panel;
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+function tpl(config) {
+    return "<div class=\"dstl-panel dstlPanel\" style=\"z-index:1000;\">\n        <div class=\"dstl-panel-area dstl_PanelArea\" " + (!config.showPanel ? " style=\"display: none;\"" : "") + ">\n        <ul class=\"dstl-panel-area-ul\">\n        <li class=\"dstl-panel-area-li\">\n        <span class=\"dstl-panel-area-label\">opacity: </span><input type=\"text\" value=\"" + config.opacity + "\" class=\"dstl_InputText dstl_ValOpacity dstl-panel-area-input\">\n        </li>\n        <li class=\"dstl-panel-area-li\">\n        <span class=\"dstl-panel-area-label\">z-index: </span><input type=\"text\" value=\"" + config.zIndex + "\" class=\"dstl_InputText dstl_ValZIndex dstl-panel-area-input\">\n        </li>\n        <li class=\"dstl-panel-area-li\">\n        <span class=\"dstl-panel-area-label\">width: </span><input type=\"text\" value=\"" + config.width + "\" class=\"dstl_InputText dstl_ValWidth dstl-panel-area-input\">\n        </li>\n        <li class=\"dstl-panel-area-li\">\n        <span class=\"dstl-panel-area-label\">height: </span><input type=\"text\" value=\"" + config.height + "\" class=\"dstl_InputText dstl_ValHeight dstl-panel-area-input\">\n        </li>\n        <li class=\"dstl-panel-area-li\">\n        <span class=\"dstl-panel-area-label\">left: </span><input type=\"text\" value=\"" + config.left + "\" class=\"dstl_InputText dstl_ValLeft dstl-panel-area-input\">\n        </li>\n        <li class=\"dstl-panel-area-li\">\n        <span class=\"dstl-panel-area-label\">top: </span><input type=\"text\" value=\"" + config.top + "\" class=\"dstl_InputText dstl_ValTop dstl-panel-area-input\">\n        </li>\n        <li class=\"dstl-panel-area-li\">\n        <span class=\"dstl-panel-area-label\">online img: </span><input type=\"text\" " + (config.src ? "value=" + config.src : "") + " class=\"dstl_InputText dstl_ValPic dstl-panel-area-input\">\n        </li>\n        </ul>\n        </div>\n\n        <div class=\"dstl-btn-area\">\n\n        <a href=\"javascript:;\" " + (!config.showPanel ? " style=\"display: none;\"" : "") + " class=\"dstl-btn btn-reset dstl_Reset\">Reset</a>\n\n        " + (config.showImg && config.src ? "<a href=\"javascript:;\" " + (!config.showPanel ? " style=\"display: none;\"" : "") + " class=\"dstl-btn btn-img-switcher dstl_ImgSwither\">Hide image</a>" : "<a href=\"javascript:;\" " + (!config.showPanel ? " style=\"display: none;\"" : "") + " class=\"dstl-btn btn-img-switcher dstl-is-closed dstl_ImgSwither\">Show image</a>") + "\n\n        " + (config.showPanel ? "<a href=\"javascript:;\" class=\"dstl-btn dstl_PanelSwitcher\">Hide panel<a>" : "<a href=\"javascript:;\" class=\"dstl-btn dstl_PanelSwitcher dstl-is-closed '\">DSTL</a>") + "\n\n        </div>\n        </div>";
+}
+exports.tpl = tpl;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(7);
+var content = __webpack_require__(8);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -918,7 +928,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(9)(content, options);
+var update = __webpack_require__(10)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -935,21 +945,21 @@ if(false) {
 }
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(8)(undefined);
+exports = module.exports = __webpack_require__(9)(undefined);
 // imports
 
 
 // module
-exports.push([module.i, "html body .dstl-wrapper {\n  position: relative;\n}\n/* 控制面板部分 */\nhtml body .dstl-panel {\n  box-sizing: border-box;\n  position: fixed;\n  z-index: 1000;\n  right: 0;\n  bottom: 0;\n  background: #ffffff;\n  border: 1px solid black;\n  border-radius: 5px;\n}\nhtml body .dstl-panel-area-ul,\nhtml body .dstl-panel-area-li {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}\nhtml body .dstl-panel-area {\n  padding-right: 10px;\n  padding-bottom: 10px;\n}\nhtml body .dstl-panel-area-ul {\n  padding-top: 10px;\n}\nhtml body .dstl-panel-area-li {\n  line-height: 26px;\n  height: 26px;\n  font-size: 12px;\n}\nhtml body .dstl-panel-area-li:after {\n  display: block;\n  content: \" \";\n  clear: both;\n}\nhtml body .dstl-panel-area-label {\n  padding: 0;\n  margin: 0;\n  background: #fff;\n  line-height: 26px;\n  text-transform: none;\n  float: left;\n  width: 80px;\n  height: 26px;\n  vertical-align: middle;\n  padding-right: 10px;\n  text-align: right;\n  color: #000;\n  font-size: 12px;\n  font-weight: normal;\n}\nhtml body .dstl-panel-area-input {\n  box-sizing: border-box;\n  height: 26px;\n  border-radius: 0;\n  box-shadow: none;\n  margin: 0;\n  width: 140px;\n  border-top: 0;\n  border-left: 0;\n  border-right: 0;\n  border-bottom: 1px solid black;\n  vertical-align: middle;\n  outline: none;\n  font-size: 12px;\n}\nhtml body .dstl-panel-area-input-file {\n  box-sizing: border-box;\n  border-radius: 0;\n  box-shadow: none;\n  margin: 0;\n  width: 140px;\n  border-top: 0;\n  border-left: 0;\n  border-right: 0;\n  vertical-align: middle;\n  outline: none;\n  font-size: 12px;\n}\nhtml body .dstl-panel-area-checkbox {\n  float: left;\n  margin-top: 7px;\n  width: 12px;\n  height: 12px;\n  border: 1px solid #000;\n}\nhtml body .dstl-panel-area-checkbox.dstl-panel-area-checked {\n  background: rgba(127, 220, 127, 0.79);\n}\nhtml body .dstl-btn-area {\n  position: relative;\n  text-align: right;\n}\nhtml body .dstl-btn-upload-wrap {\n  margin-bottom: 10px;\n}\nhtml body .dstl-btn-img-upload {\n  border: 1px solid black;\n}\nhtml body .dstl-btn {\n  display: inline-block;\n  padding: 5px;\n  text-align: center;\n  margin: 0 5px;\n  color: #000;\n  font-size: 12px;\n  text-decoration: none;\n  -webkit-transition: all .5s;\n  -moz-transition: all .5s;\n  -ms-transition: all .5s;\n  -o-transition: all .5s;\n  transition: all .5s;\n  cursor: pointer;\n}\nhtml body .dstl-btn:hover {\n  color: #ff4400;\n}\n/*图片部分*/\nhtml body .dstl-img {\n  box-sizing: border-box;\n  position: fixed;\n  width: 100%;\n  opacity: .5;\n  cursor: move;\n}\nhtml body .dstl-img.dstl-show {\n  display: inline;\n}\n/*交叉线部分*/\nhtml body .dstl-row-line,\nhtml body .dstl-vertical-line {\n  display: none;\n  position: fixed;\n  z-index: 1000;\n  left: 0;\n  top: 0;\n  background: red;\n}\nhtml body .dstl-row-line.dstl-show,\nhtml body .dstl-vertical-line.dstl-show {\n  display: block;\n}\nhtml body .dstl-row-line {\n  left: 0;\n  right: 0;\n  height: 1px;\n}\nhtml body .dstl-vertical-line {\n  width: 1px;\n  top: 0;\n  bottom: 0;\n}\n", ""]);
+exports.push([module.i, ".dstl-wrapper {\n  position: relative;\n}\n.dstl-is-closed {\n  text-align: center;\n}\n/* 控制面板部分 */\n.dstl-panel {\n  box-sizing: border-box;\n  position: fixed;\n  z-index: 1000;\n  right: 0;\n  bottom: 0;\n  background: #ffffff;\n  width: 100%;\n  background: rgba(0, 0, 0, 0.3);\n  color: #fff;\n}\n.dstl-panel-area-ul,\n.dstl-panel-area-li {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}\n.dstl-panel-area {\n  padding-right: 10px;\n  padding-bottom: 10px;\n}\n.dstl-panel-area-ul {\n  padding-top: 10px;\n}\n.dstl-panel-area-li {\n  line-height: 26px;\n  height: 26px;\n  font-size: 12px;\n}\n.dstl-panel-area-li:after {\n  display: block;\n  content: \" \";\n  clear: both;\n}\n.dstl-panel-area-label {\n  padding: 0;\n  margin: 0;\n  line-height: 26px;\n  text-transform: none;\n  float: left;\n  width: 80px;\n  height: 26px;\n  vertical-align: middle;\n  padding-right: 10px;\n  text-align: right;\n  font-size: 12px;\n  font-weight: normal;\n}\n.dstl-panel-area-input {\n  box-sizing: border-box;\n  height: 26px;\n  border-radius: 0;\n  box-shadow: none;\n  margin: 0;\n  width: 140px;\n  border-top: 0;\n  border-left: 0;\n  border-right: 0;\n  border-bottom: 1px solid #fff;\n  vertical-align: middle;\n  outline: none;\n  font-size: 12px;\n  background: transparent;\n  color: #fff;\n}\n.dstl-panel-area-input-file {\n  box-sizing: border-box;\n  border-radius: 0;\n  box-shadow: none;\n  margin: 0;\n  width: 140px;\n  border-top: 0;\n  border-left: 0;\n  border-right: 0;\n  vertical-align: middle;\n  outline: none;\n  font-size: 12px;\n}\n.dstl-panel-area-checkbox {\n  float: left;\n  margin-top: 7px;\n  width: 12px;\n  height: 12px;\n  border: 1px solid #000;\n}\n.dstl-panel-area-checkbox.dstl-panel-area-checked {\n  background: rgba(127, 220, 127, 0.79);\n}\n.dstl-btn-area {\n  position: relative;\n  text-align: right;\n}\n.dstl-btn-upload-wrap {\n  margin-bottom: 10px;\n}\n.dstl-btn-img-upload {\n  border: 1px solid black;\n}\n.dstl-btn {\n  display: inline-block;\n  padding: 5px;\n  text-align: center;\n  margin: 0 5px;\n  font-size: 12px;\n  text-decoration: none;\n  -webkit-transition: all .5s;\n  -moz-transition: all .5s;\n  -ms-transition: all .5s;\n  -o-transition: all .5s;\n  transition: all .5s;\n  cursor: pointer;\n}\n.dstl-btn:hover {\n  color: #ff4400;\n}\n/*图片部分*/\n.dstl-img {\n  box-sizing: border-box;\n  position: fixed;\n  width: 100%;\n  opacity: .5;\n  cursor: move;\n}\n.dstl-img.dstl-show {\n  display: inline;\n}\n/*交叉线部分*/\n.dstl-row-line,\n.dstl-vertical-line {\n  display: none;\n  position: fixed;\n  z-index: 1000;\n  left: 0;\n  top: 0;\n  background: red;\n}\n.dstl-row-line.dstl-show,\n.dstl-vertical-line.dstl-show {\n  display: block;\n}\n.dstl-row-line {\n  left: 0;\n  right: 0;\n  height: 1px;\n}\n.dstl-vertical-line {\n  width: 1px;\n  top: 0;\n  bottom: 0;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports) {
 
 /*
@@ -1031,7 +1041,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -1077,7 +1087,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(10);
+var	fixUrls = __webpack_require__(11);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -1390,7 +1400,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports) {
 
 

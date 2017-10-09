@@ -1,6 +1,3 @@
-/*
- * 交叉线部分
- */
 class CrossLine {
 
     constructor(config) {

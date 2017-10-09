@@ -23,7 +23,7 @@ class Page {
                 currentWindow: true
             }, (tabs) => {
                 chrome.tabs.sendMessage(tabs[0].id, {
-                    action: 'set-dstl-state',
+                    action: 'setState',
                     targetState: currentState
                 }, function(response) {
                     console.log(response);
