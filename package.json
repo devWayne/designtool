@@ -1,5 +1,5 @@
 {
-  "name": "fehelper",
+  "name": "designtool",
   "version": "0.0.1",
   "description": "",
   "scripts": {
@@ -7,12 +7,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devWayne/fehelper.git"
+    "url": "git+https://github.com/devWayne/designtool.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/devWayne/fehelper/issues"
+    "url": "https://github.com/devWayne/designtool/issues"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",
@@ -28,7 +28,7 @@
     "style-loader": "^0.18.2",
     "webpack": "^3.5.2"
   },
-  "homepage": "https://github.com/devWayne/fehelper#readme",
+  "homepage": "https://github.com/devWayne/designtool#readme",
   "dependencies": {
   }
 }
